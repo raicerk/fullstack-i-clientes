@@ -8,4 +8,17 @@ import java.util.List;
 @Repository
 public class ClientesRepository {
     private List<ClientesModel> listaClientes = new ArrayList<>();
+
+    public List<ClientesModel> obtenerClientes() {
+        return listaClientes;
+    }
+
+    public ClientesModel guardar(ClientesModel cliente) {
+        listaClientes.add(cliente);
+        return cliente;
+    }
+
+    public void eliminar(String correo) {
+        listaClientes.removeIf(cliente -> cliente.getCorreo() == correo);
+    }
 }
