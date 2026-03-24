@@ -4,6 +4,7 @@ import com.duoc.clientes.model.ClientesModel;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class ClientesRepository {
@@ -19,6 +20,6 @@ public class ClientesRepository {
     }
 
     public void eliminar(String correo) {
-        listaClientes.removeIf(cliente -> cliente.getCorreo() == correo);
+        listaClientes.removeIf(cliente -> Objects.equals(cliente.getCorreo(), correo));
     }
 }
