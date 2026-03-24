@@ -12,7 +12,7 @@ public class ClientesService {
     @Autowired
     private ClientesRepository clientesRepository;
 
-    public List<ClientesModel> getLibros() {
+    public List<ClientesModel> getClientes() {
         return clientesRepository.obtenerClientes();
     }
 
