@@ -2,7 +2,10 @@ package com.duoc.clientes.controller;
 
 import com.duoc.clientes.model.ClientesModel;
 import com.duoc.clientes.service.ClientesService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,18 +17,30 @@ public class ClientesController {
     private ClientesService clientesService;
 
     @GetMapping
-    public List<ClientesModel> listarClientes() {
-        return clientesService.getClientes();
+    public ResponseEntity<List<ClientesModel>> listarClientes() {
+        try{
+            return ResponseEntity.status(200).body(clientesService.getClientes());
+        } catch (Exception e) {
+            return new ResponseEntity("Error al obtener la lista de clientes", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping
-    public ClientesModel agregarCliente(@RequestBody ClientesModel cliente) {
-        return clientesService.saveCliente(cliente);
+    public ResponseEntity<ClientesModel> agregarCliente(@Valid @RequestBody ClientesModel cliente) {
+        try{
+            return ResponseEntity.status(201).body(clientesService.saveCliente(cliente));
+        } catch (Exception e) {
+            return new ResponseEntity("Error al guardar al cliente", HttpStatus.BAD_REQUEST);
+        }
     }
 
 
     @DeleteMapping("{correo}")
-    public String eliminarCliente(@PathVariable String correo) {
-        return clientesService.deleteCliente(correo);
+    public ResponseEntity<String> eliminarCliente(@PathVariable String correo) {
+        try{
+            return ResponseEntity.status(200).body(clientesService.deleteCliente(correo));
+        } catch (Exception e) {
+            return new ResponseEntity("Error al borrar el cliente", HttpStatus.BAD_REQUEST);
+        }
     }
 }
