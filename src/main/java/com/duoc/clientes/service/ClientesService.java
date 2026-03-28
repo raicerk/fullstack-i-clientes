@@ -12,16 +12,24 @@ public class ClientesService {
     @Autowired
     private ClientesRepository clientesRepository;
 
-    public List<ClientesModel> getClientes() {
-        return clientesRepository.obtenerClientes();
-    }
-
     public ClientesModel saveCliente(ClientesModel cliente) {
         return clientesRepository.guardar(cliente);
     }
 
-    public String deleteCliente(String correo) {
-        clientesRepository.eliminar(correo);
+    public List<ClientesModel> getClientes() {
+        return clientesRepository.obtenerClientes();
+    }
+
+    public ClientesModel obtenerClientePorId(Integer id) {
+        return clientesRepository.obtenerCliente(id);
+    }
+
+    public ClientesModel actualizarCliente(Integer id, ClientesModel cliente) {
+        return clientesRepository.actualizar(id, cliente);
+    }
+
+    public String deleteCliente(Integer id) {
+        clientesRepository.eliminar(id);
         return "Cliente eliminado";
     }
 }

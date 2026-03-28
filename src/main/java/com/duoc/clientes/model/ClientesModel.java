@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ClientesModel {
+
+    @NotNull(message = "El Id no puede ser null")
+    private Integer id;
+
     @NotNull(message = "El nombre no puede ser null")
     @NotBlank(message = "El nombre no puede estar vacio")
     private String nombre;

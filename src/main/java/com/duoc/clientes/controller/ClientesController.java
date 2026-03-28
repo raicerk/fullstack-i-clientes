@@ -16,15 +16,6 @@ public class ClientesController {
     @Autowired
     private ClientesService clientesService;
 
-    @GetMapping
-    public ResponseEntity<List<ClientesModel>> listarClientes() {
-        try{
-            return ResponseEntity.status(200).body(clientesService.getClientes());
-        } catch (Exception e) {
-            return new ResponseEntity("Error al obtener la lista de clientes", HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PostMapping
     public ResponseEntity<ClientesModel> agregarCliente(@Valid @RequestBody ClientesModel cliente) {
         try{
@@ -34,11 +25,37 @@ public class ClientesController {
         }
     }
 
-
-    @DeleteMapping("{correo}")
-    public ResponseEntity<String> eliminarCliente(@PathVariable String correo) {
+    @GetMapping
+    public ResponseEntity<List<ClientesModel>> listarClientes() {
         try{
-            return ResponseEntity.status(200).body(clientesService.deleteCliente(correo));
+            return ResponseEntity.status(200).body(clientesService.getClientes());
+        } catch (Exception e) {
+            return new ResponseEntity("Error al obtener la lista de clientes", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<ClientesModel> listarClientesPorId(@PathVariable Integer id) {
+        try{
+            return ResponseEntity.status(200).body(clientesService.obtenerClientePorId(id));
+        } catch (Exception e) {
+            return new ResponseEntity("Error al obtener el cliente", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ClientesModel> actualizarClientePorId(@PathVariable Integer id, @Valid @RequestBody ClientesModel cliente) {
+        try{
+            return ResponseEntity.status(200).body(clientesService.actualizarCliente(id, cliente));
+        } catch (Exception e) {
+            return new  ResponseEntity("Error al actualizar el cliente", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> eliminarCliente(@PathVariable Integer id) {
+        try{
+            return ResponseEntity.status(200).body(clientesService.deleteCliente(id));
         } catch (Exception e) {
             return new ResponseEntity("Error al borrar el cliente", HttpStatus.BAD_REQUEST);
         }
